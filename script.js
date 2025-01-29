@@ -1,20 +1,22 @@
-
-function generate_words() {
-  fetch('./words.json')
-    .then((response) => response.json())
-    .then((words) => {
-      const randomElements = getRandomElements(words, 100); // Get 100 unique random elements
-      const textarea = document.getElementById("typing");
-
-      // Clear the textarea before appending new words
-      textarea.value = "";
-
-      for (let i = 0; i < randomElements.length; i++) {
-        // Append the random word to the textarea
-        textarea.value += randomElements[i] + " ";
-      }
-    })
-    .catch((error) => console.error('Error fetching words:', error));
+function getRandomElements(arr, count) {
+  return Array.from({ length: count }, () => arr[Math.floor(Math.random() * arr.length)]);
 }
 
-generate_words();
+function generate_words() {
+  let words;
+  fetch('./words.json')
+      .then((response) => response.json())
+      .then((json) => words = json);
+
+  const randomElements = getRandomElements(words, 100); // Get 3 unique random elements
+  const textarea = document.getElementById("typing");
+
+  for (let i = 0; i < randomElements.size; i++) {
+    // Append the random word to the textarea
+    let currentText = textarea.value;
+    textarea.value = currentText + randomWord + " ";
+  }
+}
+
+generate_words()
+
