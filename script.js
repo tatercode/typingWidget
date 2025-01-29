@@ -11,7 +11,7 @@ function generate_words() {
   const randomElements = getRandomElements(words, 100); // Get 3 unique random elements
   const textarea = document.getElementById("typing");
 
-  for (let i = 0; i < randomElements.size; i++) {
+  for (let i = 0; i < randomElements.length; i++) {
     // Append the random word to the textarea
     let currentText = textarea.value;
     textarea.value = currentText + randomWord + " ";
