@@ -8,6 +8,7 @@ body {
 .test {
   display: flex;
   background-color: #1e1e1e;
+  justify-content: center;
 }
 
 #typing {
@@ -17,4 +18,17 @@ body {
   box-shadow: 1px 1px 1px #999;
   color: #e5e5e5;
   background-color: #1e1e1e;
+}
+
+/* Styles for correct, incorrect, and remaining characters */
+.correct {
+  color: #e5e5e5; /* Light gray for correct characters */
+}
+
+.incorrect {
+  color: #ff4444; /* Red for incorrect characters */
+}
+
+.remaining {
+  color: #888; /* Gray for remaining characters */
 }
