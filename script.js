@@ -12,7 +12,7 @@ function generate_words() {
       }
 
       textarea.value = currentText; // Update the textarea value
-      textarea.setAttribute("data-original-text", currentText
+      textarea.setAttribute("data-original-text", currentText)
     })
     .catch((error) => console.error("Error getting words", error)); // Fixed missing parenthesis
 }
