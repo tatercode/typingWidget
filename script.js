@@ -30,7 +30,7 @@ function generate_words() {
   wrap_chars();
 }
 
-// generate_words();
+generate_words();
 
 function practice_words() {
   let words = "practice the cat yeet";
@@ -40,7 +40,7 @@ function practice_words() {
   wrap_chars();
 }
 
-practice_words();
+// practice_words();
 
 let index = 0;
 function check_typing(event) {
@@ -70,9 +70,14 @@ function check_typing(event) {
 // Attach event listener to the wordsArea
 document.addEventListener("DOMContentLoaded", () => {
   const textArea = document.getElementById("typing");
-  textArea.focus();
   textArea.addEventListener("keydown", (event) => {
     check_typing(event);
+  });
+
+  let div = document.getElementsByClassName("test");
+  div = div[0];
+  div.addEventListener("click", () => {
+    textArea.focus();
   });
 });
 
