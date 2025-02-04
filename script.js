@@ -1,3 +1,19 @@
+let INDEX = 0; // Tells us where we are
+let CORRECTWORD = 0;
+let TIMESTART = null;
+let TIMEREMAINING = 30;
+let STARTED = false;
+let ENDED = false;
+
+function start() {
+  const textArea = document.getElementById("typing");
+  textArea.focus();
+  let wordsArea = document.getElementById("words");
+  wordsArea.className = "";
+  const blur = document.getElementById("focus");
+  blur.style.display = "none";
+}
+
 // Add span to every character in div
 function wrap_chars() {
   const wordsArea = document.getElementById("words");
@@ -49,7 +65,6 @@ function practice_words() {
 }
 
 // Check if char is correctly typed
-let INDEX = 0; // Tells us where we are
 function check_typing(event) {
   const textArea = document.getElementById("typing");
   allSpans = document.getElementById("words").querySelectorAll("span");
@@ -58,19 +73,25 @@ function check_typing(event) {
   textArea.style.display = "flex";
   if (event.key === "Backspace" && INDEX > 0) {
     console.log("BACK");
+    let charElement = document.getElementById(`char-${INDEX}`);
+    charElement.classList.remove("current_char")
     INDEX -= 1;
-    const charElement = document.getElementById(`char-${INDEX}`);
+    charElement = document.getElementById(`char-${INDEX}`);
     charElement.className = "remaining";
+    charElement.classList.add("current_char")
     return;
   }
-  const charElement = document.getElementById(`char-${INDEX}`);
+  let charElement = document.getElementById(`char-${INDEX}`);
 
   if (charElement.textContent == event.key) {
     charElement.className = "correct";
   } else {
     charElement.className = "incorrect";
   }
+  charElement.classList.remove("current_char")
   INDEX++;
+  charElement = document.getElementById(`char-${INDEX}`);
+  charElement.classList.add("current_char")
   scroll_text()
 }
 
@@ -99,10 +120,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let div = document.getElementsByClassName("test");
   div = div[0];
+  
   div.addEventListener("click", () => {
-    textArea.focus();
+    start();
   });
 });
 
-practice_words();
-//generate_words();
+//practice_words();
+generate_words();
