@@ -8,6 +8,7 @@ function wrap_chars() {
 
   wordsArea.textContent = "";
   wordsArea.innerHTML = addingSpan;
+  console.log(wordsArea.innerHTML);
 }
 
 function generate_words() {
@@ -22,10 +23,8 @@ function generate_words() {
         currentText += randomWord + " "; // Append random word to currentText
       }
       
-      // Update the wordsArea value
       wordsArea.textContent = currentText;
     })
-    // Fixed missing parenthesis
     .catch((error) => console.error("Error getting words", error));
   wrap_chars();
 }
