@@ -1,47 +1,56 @@
+function wrap_chars() {
+  const wordsArea = document.getElementById("words");
+  let addingSpan = "";
+  for (char in wordsArea.textContent) {
+    addingSpan += 
+    `<span class="remaining" id="char-${char}">${wordsArea.textContent[char]}</span>`
+  }
+
+  wordsArea.textContent = "";
+  wordsArea.innerHTML = addingSpan;
+}
 
 function generate_words() {
   fetch('./words.json')
     .then((response) => response.json())
     .then((words) => {
-      const textarea = document.getElementById("typing");
+      const wordsArea = document.getElementById("words");
       let currentText = ""; // Initialize currentText
 
       for (let i = 0; i < 100; i++) {
         const randomWord = words[Math.floor(Math.random() * words.length)];
         currentText += randomWord + " "; // Append random word to currentText
       }
-
-      textarea.value = currentText; // Update the textarea value
-      textarea.setAttribute("data-original-text", currentText)
+      
+      // Update the wordsArea value
+      wordsArea.textContent = currentText;
     })
-    .catch((error) => console.error("Error getting words", error)); // Fixed missing parenthesis
+    // Fixed missing parenthesis
+    .catch((error) => console.error("Error getting words", error));
+  wrap_chars();
 }
 
-generate_words();
+// generate_words();
 
-function check_typing() {
-  const textarea = document.getElementById("typing");
-  const userInput = textarea.value;
-  const originalText = textarea.getAttribute("data-original-text");
+function practice_words() {
+  let words = "practice the cat yeet";
+  const wordsArea = document.getElementById("words");
 
-  let highlightedText = "";
-  for (let i = 0; i < userInput.length; i++) {
-    if (userInput[i] === originalText[i]) {
-      highlightedText += `<span class="correct">${userInput[i]}</span>`; // Correct character
-    } else {
-      highlightedText += `<span class="incorrect">${userInput[i]}</span>`; // Incorrect character
-    }
-  }
-
-  // Append remaining original text (not yet typed)
-  if (userInput.length < originalText.length) {
-    highlightedText += `<span class="remaining">${originalText.slice(userInput.length)}</span>`;
-  }
-
-  // Display the highlighted text (for demonstration, we'll log it to the console)
-  console.log(highlightedText); // You can replace this with a visual update
+  wordsArea.textContent = words;
+  wrap_chars();
 }
 
-// Attach event listener to the textarea
-document.getElementById("typing").addEventListener("input", check_typing);
+practice_words()
+
+function check_typing(event) {
+  const textArea = document.getElementById("typing");
+  textArea.style.display = "flex";
+  console.log("HELLO", event.target.value);
+}
+
+
+// Attach event listener to the wordsArea
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("typing").addEventListener("input", check_typing);
+});
 

@@ -5,6 +5,10 @@ body {
   font-family: 'Roboto Mono', monospace; 
 }
 
+#char-0 {
+ color: red;
+}
+
 .test {
   display: flex;
   background-color: #1e1e1e;
@@ -18,17 +22,28 @@ body {
   box-shadow: 1px 1px 1px #999;
   color: #e5e5e5;
   background-color: #1e1e1e;
+  display: none;
 }
 
-/* Styles for correct, incorrect, and remaining characters */
+#words {
+  font-size: 30px;
+  border: 1px solid #fff;
+  box-shadow: 1px 1px 1px #999;
+  background-color: #1e1e1e;
+  color: #e5e5e5;
+  width: 500px;
+  height: 200px;
+}
+
+/* Colors to show completion */
 .correct {
-  color: #e5e5e5; /* Light gray for correct characters */
+  color: #e5e5e5; /* Light gray */
 }
 
 .incorrect {
-  color: #ff4444; /* Red for incorrect characters */
+  color: #ff4444; /* Red */
 }
 
 .remaining {
-  color: #888; /* Gray for remaining characters */
+  color: #888; /* Gray */
 }
