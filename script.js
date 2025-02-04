@@ -35,22 +35,44 @@ function generate_words() {
 function practice_words() {
   let words = "practice the cat yeet";
   const wordsArea = document.getElementById("words");
-
+  
   wordsArea.textContent = words;
   wrap_chars();
 }
 
-practice_words()
+practice_words();
 
+let index = 0;
 function check_typing(event) {
   const textArea = document.getElementById("typing");
+  allSpans = document.getElementById("words").querySelectorAll("span");
+  console.log(document.getElementById(`char-${index}`));
+  console.log(event.key);
   textArea.style.display = "flex";
-  console.log("HELLO", event.target.value);
-}
+  if (event.key === "Backspace" && index > 0) {
+    console.log("BACK");
+    index -= 1;
 
+    const charElement = document.getElementById(`char-${index}`);
+    charElement.className = "remaining";
+    return;
+  }
+  const charElement = document.getElementById(`char-${index}`);
+
+  if (charElement.textContent == event.key) {
+    charElement.className = "correct";
+  } else {
+    charElement.className = "incorrect";
+  }
+  index++;
+}
 
 // Attach event listener to the wordsArea
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("typing").addEventListener("input", check_typing);
+  const textArea = document.getElementById("typing");
+  textArea.focus();
+  textArea.addEventListener("keydown", (event) => {
+    check_typing(event);
+  });
 });
 
