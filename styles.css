@@ -25,6 +25,7 @@ body {
   left: -9999px;
   pointer-events: none;
   overflow: hidden;
+
 }
 
 #words {
@@ -36,6 +37,7 @@ body {
   width: 500px;
   height: 200px;
   overflow: hidden;
+  position: relative;
 }
 
 /* Colors to show completion */

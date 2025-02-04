@@ -1,3 +1,4 @@
+// Add span to every character in div
 function wrap_chars() {
   const wordsArea = document.getElementById("words");
   let addingSpan = "";
@@ -12,6 +13,7 @@ function wrap_chars() {
   console.log(wordsArea.innerHTML);
 }
 
+// Randomly generate words from json file
 function generate_words() {
   fetch('./words.json')
     .then((response) => response.json())
@@ -31,41 +33,61 @@ function generate_words() {
 
 }
 
-generate_words();
-
+// Used for testing 
 function practice_words() {
-  let words = "practice the cat yeet";
+  let words = "practice the cat yeet ";
+
   const wordsArea = document.getElementById("words");
   
   wordsArea.textContent = words;
+  
+  for (let i = 0; i < 10; i++) {
+    wordsArea.textContent += words;
+  }
+
   wrap_chars();
 }
 
-// practice_words();
-
-let index = 0;
+// Check if char is correctly typed
+let INDEX = 0; // Tells us where we are
 function check_typing(event) {
   const textArea = document.getElementById("typing");
   allSpans = document.getElementById("words").querySelectorAll("span");
-  console.log(document.getElementById(`char-${index}`));
+  console.log(document.getElementById(`char-${INDEX}`));
   console.log(event.key);
   textArea.style.display = "flex";
-  if (event.key === "Backspace" && index > 0) {
+  if (event.key === "Backspace" && INDEX > 0) {
     console.log("BACK");
-    index -= 1;
-
-    const charElement = document.getElementById(`char-${index}`);
+    INDEX -= 1;
+    const charElement = document.getElementById(`char-${INDEX}`);
     charElement.className = "remaining";
     return;
   }
-  const charElement = document.getElementById(`char-${index}`);
+  const charElement = document.getElementById(`char-${INDEX}`);
 
   if (charElement.textContent == event.key) {
     charElement.className = "correct";
   } else {
     charElement.className = "incorrect";
   }
-  index++;
+  INDEX++;
+  scroll_text()
+}
+
+// Scroll if hit bottom of div
+function scroll_text() {
+  const wordsArea = document.getElementById("words");
+  const charElement = document.getElementById(`char-${INDEX}`);
+  
+  if (charElement) {
+    const charRect = charElement.getBoundingClientRect();
+    const containerRect = wordsArea.getBoundingClientRect();
+    
+    if (charRect.bottom > containerRect.bottom) {
+      const scrollAmount = charRect.bottom - containerRect.bottom;
+      wordsArea.scrollTop += scrollAmount;
+    }
+  }
 }
 
 // Attach event listener to the wordsArea
@@ -82,3 +104,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+practice_words();
+//generate_words();
