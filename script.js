@@ -2,8 +2,9 @@ function wrap_chars() {
   const wordsArea = document.getElementById("words");
   let addingSpan = "";
   for (char in wordsArea.textContent) {
+    console.log(char);
     addingSpan += 
-    `<span class="remaining" id="char-${char}">${wordsArea.textContent[char]}</span>`
+    `<span class="remaining" id="char-${char}">${wordsArea.textContent[char]}</span>`;
   }
 
   wordsArea.textContent = "";
@@ -24,9 +25,10 @@ function generate_words() {
       }
       
       wordsArea.textContent = currentText;
+      wrap_chars();
     })
     .catch((error) => console.error("Error getting words", error));
-  wrap_chars();
+
 }
 
 generate_words();
