@@ -21,7 +21,18 @@ function start() {
   blur.style.display = "none";
   const timer = document.getElementById("timer");
   timer.style.display = "flex";
-  countDown()
+  //practice_words();
+  generate_words();
+  countDown();
+}
+
+function end() {
+  const blur = document.getElementById("focus");
+  const textArea = document.getElementById("typing");
+  textArea.blur();
+  blur.style.display = "flex";
+  CORRECTLETTERS = 0;
+  INDEX = 0;
 }
 
 function countDown() {
@@ -37,8 +48,11 @@ function countDown() {
     timerText.textContent = `${timeLeft}s`;
     if (timeLeft <= 0) {
       clearInterval(intervalId);
+      end();
     }
   }, 1000)
+  
+ 
   console.log("timer");
 }
 
@@ -138,7 +152,7 @@ function scroll_text() {
     
     if (charRect.bottom > containerRect.bottom) {
       const scrollAmount = charRect.bottom - containerRect.bottom;
-      wordsArea.scrollTop += (scrollAmount * 5);
+      wordsArea.scrollTop += (scrollAmount * 5 + 20);
     }
     //else if (charRect.top > containerRect.top) {
     //  const scrollAmount = charRect.top - containerRect.top;
