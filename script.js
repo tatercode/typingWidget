@@ -1,10 +1,17 @@
 let INDEX = 0; // Tells us where we are
-let CORRECTWORD = 0;
+let CORRECTLETTERS = 0; // How many correct
+let WRONGLETTERS = 0;
 let TIMESTART = null;
 let TIMEREMAINING = 30;
 let STARTED = false;
 let ENDED = false;
 
+function calculateWPM() {
+  const elapsedMinutes = (Date.now() - TIMESTART) / 60000;
+  return Math.round((CORRECTLETTERS/ 5) / elapsedMinutes);
+}
+
+// Start typing
 function start() {
   const textArea = document.getElementById("typing");
   textArea.focus();
@@ -12,7 +19,30 @@ function start() {
   wordsArea.className = "";
   const blur = document.getElementById("focus");
   blur.style.display = "none";
+  const timer = document.getElementById("timer");
+  timer.style.display = "flex";
+  countDown()
 }
+
+function countDown() {
+  const timerText = document.getElementById("timer-text")
+  const wpm = document.getElementById("WPM");
+  TIMESTART = Date.now();
+  timeLeft = 30;
+  intervalId = setInterval(() => {
+    timeLeft--;
+    ans = calculateWPM();
+    console.log(ans);
+    wpm.textContent = `WPM:${ans}`;
+    timerText.textContent = `${timeLeft}s`;
+    if (timeLeft <= 0) {
+      clearInterval(intervalId);
+    }
+  }, 1000)
+  console.log("timer");
+}
+
+
 
 // Add span to every character in div
 function wrap_chars() {
@@ -57,7 +87,7 @@ function practice_words() {
   
   wordsArea.textContent = words;
   
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 300; i++) {
     wordsArea.textContent += words;
   }
 
@@ -85,8 +115,10 @@ function check_typing(event) {
 
   if (charElement.textContent == event.key) {
     charElement.className = "correct";
+    CORRECTLETTERS += 1;
   } else {
     charElement.className = "incorrect";
+    WRONGLETTERS -= 1;
   }
   charElement.classList.remove("current_char")
   INDEX++;
@@ -95,7 +127,7 @@ function check_typing(event) {
   scroll_text()
 }
 
-// Scroll if hit bottom of div
+// Scroll if hit bottom or top of div
 function scroll_text() {
   const wordsArea = document.getElementById("words");
   const charElement = document.getElementById(`char-${INDEX}`);
@@ -106,8 +138,12 @@ function scroll_text() {
     
     if (charRect.bottom > containerRect.bottom) {
       const scrollAmount = charRect.bottom - containerRect.bottom;
-      wordsArea.scrollTop += scrollAmount;
+      wordsArea.scrollTop += (scrollAmount * 5);
     }
+    //else if (charRect.top > containerRect.top) {
+    //  const scrollAmount = charRect.top - containerRect.top;
+    //  wordsArea.scrollTop -= (scrollAmount);
+    //}
   }
 }
 
@@ -126,5 +162,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-//practice_words();
-generate_words();
+practice_words();
+//generate_words();
