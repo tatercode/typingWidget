@@ -1,10 +1,10 @@
-let INDEX = 0; // Tells us where we are
+let INDEX = 0; // Tells ufalsefalses where we are
 let CORRECTLETTERS = 0; // How many correct
 let WRONGLETTERS = 0;
 let TIMESTART = null;
 let TIMEREMAINING = 30;
 let STARTED = false;
-let ENDED = false;
+let ENDED = true;
 
 function calculateWPM() {
   const elapsedMinutes = (Date.now() - TIMESTART) / 60000;
@@ -17,10 +17,12 @@ function start() {
   textArea.focus();
   let wordsArea = document.getElementById("words");
   wordsArea.className = "";
+  wordsArea.scrollTop = 0;
   const blur = document.getElementById("focus");
   blur.style.display = "none";
   const timer = document.getElementById("timer");
   timer.style.display = "flex";
+  ENDED = false;
   //practice_words();
   generate_words();
   countDown();
@@ -28,11 +30,14 @@ function start() {
 
 function end() {
   const blur = document.getElementById("focus");
+  blur.textContent = "Click here to restart";
   const textArea = document.getElementById("typing");
   textArea.blur();
-  blur.style.display = "flex";
+  blur.style.display = "flex"; 
+  const wordsArea = document.getElementById("words")
   CORRECTLETTERS = 0;
   INDEX = 0;
+  ENDED = true;
 }
 
 function countDown() {
@@ -152,7 +157,7 @@ function scroll_text() {
     
     if (charRect.bottom > containerRect.bottom) {
       const scrollAmount = charRect.bottom - containerRect.bottom;
-      wordsArea.scrollTop += (scrollAmount * 5 + 20);
+      wordsArea.scrollTop += (scrollAmount * 5 + 10);
     }
     //else if (charRect.top > containerRect.top) {
     //  const scrollAmount = charRect.top - containerRect.top;
@@ -172,7 +177,9 @@ document.addEventListener("DOMContentLoaded", () => {
   div = div[0];
   
   div.addEventListener("click", () => {
-    start();
+    if (ENDED) {
+      start();
+    }
   });
 });
 
