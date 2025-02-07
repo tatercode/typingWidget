@@ -22,8 +22,8 @@ function start() {
   const timer = document.getElementById("timer");
   timer.style.display = "flex";
   ENDED = false;
-  //practice_words();
-  generate_words();
+  practice_words();
+  //generate_words();
   countDown();
 }
 
@@ -120,10 +120,6 @@ function scroll_text() {
       const scrollAmount = charRect.bottom - containerRect.bottom;
       wordsArea.scrollTop += (scrollAmount * 5 + 10);
     }
-    //else if (charRect.top > containerRect.top) {
-    //  const scrollAmount = charRect.top - containerRect.top;
-    //  wordsArea.scrollTop -= (scrollAmount);
-    //}
   }
 }
 
@@ -139,10 +135,14 @@ document.addEventListener("DOMContentLoaded", () => {
       start();
     }
   });
+
+  let wordsArea = document.getElementById("words");
+  wordsArea.addEventListener("click", () => {
+    textArea.focus();
+  })
 });
 
 practice_words();
-//generate_words();
 
 function toggleTheme(isDark) {
   const colors = {
@@ -202,13 +202,11 @@ function toggleTheme(isDark) {
     .incorrect { color: ${theme.incorrect} !important; }
   `;
   
-  // Remove any previous style element we added
   const oldStyle = document.getElementById('theme-styles');
   if (oldStyle) {
     oldStyle.remove();
   }
   
-  // Add ID to new style element and append it
   style.id = 'theme-styles';
   document.head.appendChild(style);
   
@@ -232,19 +230,32 @@ function updateCharStyles(charElement, isCorrect) {
   }
 }
 
-// Modify the check_typing function to use the new updateCharStyles
 function check_typing(event) {
   const textArea = document.getElementById("typing");
   allSpans = document.getElementById("words").querySelectorAll("span");
   textArea.style.display = "flex";
   
   if (event.key === "Backspace" && INDEX > 0) {
+    const wordsArea = document.getElementById("words");
     let charElement = document.getElementById(`char-${INDEX}`);
+    const containerRect = wordsArea.getBoundingClientRect();
+
     charElement.classList.remove("current_char")
     INDEX -= 1;
     charElement = document.getElementById(`char-${INDEX}`);
+    const charRect = charElement.getBoundingClientRect();
+    console.log(charRect.top);
+    console.log(containerRect.top);
+    if (charRect.top < containerRect.top - 4) {
+      console.log("IN HERE")
+      INDEX += 1;
+      charElement = document.getElementById(`char-${INDEX}`);
+      charElement.classList.add("current_char")
+      return
+    }
     charElement.className = "remaining";
     charElement.classList.add("current_char")
+    
     return;
   }
   
@@ -267,7 +278,6 @@ function check_typing(event) {
   scroll_text()
 }
 
-// Modify your existing event listener for the toggle
 document.getElementById('toggle').addEventListener('change', function() {
   toggleTheme(this.checked);
 });
