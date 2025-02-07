@@ -244,10 +244,7 @@ function check_typing(event) {
     INDEX -= 1;
     charElement = document.getElementById(`char-${INDEX}`);
     const charRect = charElement.getBoundingClientRect();
-    console.log(charRect.top);
-    console.log(containerRect.top);
     if (charRect.top < containerRect.top - 4) {
-      console.log("IN HERE")
       INDEX += 1;
       charElement = document.getElementById(`char-${INDEX}`);
       charElement.classList.add("current_char")
