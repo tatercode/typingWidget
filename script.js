@@ -22,8 +22,8 @@ function start() {
   const timer = document.getElementById("timer");
   timer.style.display = "flex";
   ENDED = false;
-  practice_words();
-  //generate_words();
+  //practice_words();
+  generate_words();
   countDown();
 }
 
